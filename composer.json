@@ -1,0 +1,19 @@
+{
+    "name": "user/framework",
+    "autoload": {
+        "files":[
+            "support/request.php",
+            "support/response.php"
+        ],
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "RazerFord",
+            "email": "desk10567@gmail.com"
+        }
+    ],
+    "require": {}
+}
