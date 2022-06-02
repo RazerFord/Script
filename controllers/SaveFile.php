@@ -2,9 +2,9 @@
 
 namespace app\controllers;
 
-class TestController
+class SaveFile
 {
-    public function test()
+    public function save()
     {
         return response(true, 'suucccc', ["hello world" => 1], 201);
     }

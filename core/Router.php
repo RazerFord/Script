@@ -33,7 +33,7 @@ class Router
         $operation = $this->routes[$method][$path] ?? false;
 
         if ($operation === false) {
-            return '404';
+            return response(false, 'page not found', null, 404);
         }
 
         [$controller, $method] = explode('@', $operation);

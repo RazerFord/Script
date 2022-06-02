@@ -13,16 +13,16 @@ class Request
         $uri = $_SERVER['REQUEST_URI']  ?? '/';
 
         $params = explode('?', $uri);
-        
+
         $this->path = $params[0];
-        
+
         if (isset($params[1]) && is_string($params[1])) {
             $this->buildGetParams($params[1]);
         }
-        
+
         $this->buildPostParams();
     }
-    
+
     public function getPath()
     {
         return $this->path;
@@ -47,10 +47,14 @@ class Request
 
     public function buildPostParams()
     {
-        $this->body = array_merge($this->body, $_POST);
+        if (is_array($_POST)) {
+            $this->body = array_merge($this->body, $_POST);
+        }
 
         $input = json_decode(file_get_contents("php://input"), true);
 
-        $this->body = array_merge($this->body, $input);
+        if (is_array($input)) {
+            $this->body = array_merge($this->body, $input);
+        }
     }
 }
