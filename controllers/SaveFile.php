@@ -16,6 +16,11 @@ class SaveFile
         return $this->save('courses/');
     }
 
+    public function test()
+    {
+        return response(true, 'Hello, world!', null, 200);
+    }
+
     private function save(string $dir)
     {
         $file = request()['file'];
