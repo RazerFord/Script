@@ -1,2 +1,2 @@
-./app/courses
-./app/lectures
+./app/courses/*
+./app/lectures/*
