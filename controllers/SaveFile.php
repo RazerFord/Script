@@ -6,7 +6,17 @@ use app\Decode\DecodeFile;
 
 class SaveFile
 {
-    public function save()
+    public function SaveLecture()
+    {
+        return $this->save('lectures/');
+    }
+
+    public function SaveCourse()
+    {
+        return $this->save('courses/');
+    }
+
+    private function save(string $dir)
     {
         $file = request()['file'];
 
@@ -30,7 +40,7 @@ class SaveFile
 
         $name = microtime(true) . str_shuffle('abcdefghijklmnopqrstuvwxyz');
 
-        $path = $fileDecoder->save('lectures/', $name);
+        $path = $fileDecoder->save($dir, $name);
 
         return response(true, 'file saved', ['path' => $path], 200);
     }

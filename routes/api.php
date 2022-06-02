@@ -1,3 +1,4 @@
 <?php
 
-$app->router->post('/save-file', "SaveFile@save");
+$app->router->post('/save-lecture-file', "SaveFile@SaveLecture");
+$app->router->post('/save-course-file', "SaveFile@SaveCourse");

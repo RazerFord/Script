@@ -99,10 +99,10 @@ class DecodeFile implements IDecodeInterface, ISaveFile
         }
         // var_dump(file_put_contents('test' . $this->getExtension(), $data));
         if (!file_put_contents($path, $data)) {
-            return false; 
+            return false;
         }
 
-        return $path;
+        return ($_SERVER['SERVER_NAME']) . '/public/' . $directory . $fileName;
     }
 
     /**
