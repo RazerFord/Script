@@ -1,3 +1,3 @@
 <?php
 
-$app->router->post('/', "TestController@test");
+$app->router->post('/save-file', "SaveFile@save");
