@@ -15,5 +15,7 @@
             "email": "desk10567@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "5.3"
+    }
 }

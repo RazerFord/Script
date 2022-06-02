@@ -25,4 +25,4 @@ services:
     working_dir: /comp
     volumes:
       - "./:/comp"
-    command: composer install --ignore-platform-reqs
+    command: composer update --ignore-platform-reqs
