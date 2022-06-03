@@ -102,7 +102,7 @@ class DecodeFile implements IDecodeInterface, ISaveFile
             return false;
         }
 
-        return ($_SERVER['SERVER_NAME']) . '/api/public/' . $directory . $fileName;
+        return '/api/public/' . $directory . $fileName;
     }
 
     /**
