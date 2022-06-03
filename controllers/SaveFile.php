@@ -23,7 +23,9 @@ class SaveFile
 
     private function save(string $dir)
     {
-        $file = request()['file'];
+        $request = request();
+
+        $file = isset($request['file']) ? $request['file'] : null;
 
         if (empty($file)) {
             return response(false, 'attribute file must not be empty', null, 422);
