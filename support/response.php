@@ -6,7 +6,7 @@ if (!function_exists('response')) {
 
     function response(bool $status, string $message, ?array $data, int $code)
     {
-        ServiceProvider::register('http_response_code', $code);
+        http_response_code($code);
         
         return json_encode([
             'success' => $status, 
