@@ -8,6 +8,7 @@ if (!function_exists('response')) {
     {
         // header("HTTP/1.1 201 OK");
         http_response_code($code);
+        
         return json_encode([
             'success' => $status, 
             'message' => $message,
