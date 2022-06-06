@@ -1,8 +1,8 @@
-
 RewriteEngine on
 
-Header always set Access-Control-Allow-Methods "OPTIONS, GET, POST"
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Headers "accept, content-type"
+Header always set Access-Control-Allow-Methods "OPTIONS, GET, POST"
+Header always set Access-Control-Request-Headers "*"
 
 RewriteRule .* public/index.php
