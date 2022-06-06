@@ -8,15 +8,18 @@ header("Content-Type: application/json; charset=UTF-8");
 use app\core\Application;
 use app\core\ServiceProvider;
 use app\middleware\Authorization;
+use app\middleware\CorseMiddleware;
 
 $app = new Application();
 
 ServiceProvider::register('request', $app->router->request);
 
-$auth = new Authorization();
-$answer = $auth->handle();
+ServiceProvider::registerMiddleware('auth', new Authorization());
+ServiceProvider::registerMiddleware('cors', new CorseMiddleware());
 
-if ($answer === false) {
+ServiceProvider::middlewareHandle();
+
+if (ServiceProvider::$middlewareAnswers['auth'] === false) {
     echo response(false, 'user not authorize', null, 401);
     return;
 }

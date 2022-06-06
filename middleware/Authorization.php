@@ -2,8 +2,6 @@
 
 namespace app\middleware;
 
-use GuzzleHttp\Client;
-
 class Authorization
 {
     private string $token;
