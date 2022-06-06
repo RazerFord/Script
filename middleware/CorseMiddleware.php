@@ -9,7 +9,7 @@ class CorseMiddleware
     public function handle()
     {
         // echo "cors<br>";
-        header("Access-Control-Request-Origin: *");
+        header("Access-Control-Request-Origin: x-requested-with");
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Headers: *");
         header("Access-Control-Request-Headers: *");
