@@ -8,7 +8,11 @@ class CorseMiddleware
 {
     public function handle()
     {
-        echo "cors<br>";
+        echo json_encode([
+            'success' => false,
+            'message' => 'ggg',
+            'data' => null,
+        ]);
 
         // header("Access-Control-Allow-Origin: *");
         // header("Access-Control-Allow-Headers: *");
