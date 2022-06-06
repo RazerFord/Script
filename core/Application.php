@@ -14,6 +14,6 @@ class Application
     public function run()
     {
         echo $this->router->resolve();
-        exit();
+        die(ServiceProvider::$property['code']);
     }
 }
