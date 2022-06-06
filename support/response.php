@@ -6,11 +6,11 @@ if (!function_exists('response')) {
 
     function response(bool $status, string $message, ?array $data, int $code)
     {
-        header("HTTP/1.1 201 OK");
+        header("HTTP/1.1 " . $code);
         // http_response_code($code);
 
         return json_encode([
-            'success' => $status, 
+            'success' => $status,
             'message' => $message,
             'data' => $data,
         ]);
