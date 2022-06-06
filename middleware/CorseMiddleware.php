@@ -15,7 +15,7 @@ class CorseMiddleware
             'message' => 'ggg',
             'data' => null,
         ]);
-        die(401)
+        exit();
         // header("Access-Control-Allow-Origin: *");
         // header("Access-Control-Allow-Headers: *");
         // header("Access-Control-Request-Headers: *");
