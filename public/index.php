@@ -16,7 +16,7 @@ ServiceProvider::registerMiddleware('cors', new CorseMiddleware());
 
 ServiceProvider::middlewareHandle();
 
-if (ServiceProvider::$middlewareAnswers['auth'] === false && $_SERVER['REQUEST_URI'] !== '/delete-file') {
+if (ServiceProvider::$middlewareAnswers['auth'] === false) {
     echo response(false, 'user not authorize', null, 401);
     return;
 }

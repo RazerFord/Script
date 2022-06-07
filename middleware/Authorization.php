@@ -15,6 +15,10 @@ class Authorization
 
     public function handle()
     {
+        if ($this->except()) {
+            return true;
+        }
+
         if (empty($this->token)) {
             return false;
         }
@@ -43,5 +47,13 @@ class Authorization
             return false;
         }
         return json_decode($response);
+    }
+
+    public function except()
+    {
+        $exceptPaths = [
+            '/delete-file'
+        ];
+        return in_array($_SERVER['REQUEST_URI'], $exceptPaths);
     }
 }
