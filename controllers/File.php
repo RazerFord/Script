@@ -59,18 +59,23 @@ class File
 
     public function delete()
     {
-        if (in_array($_SERVER['REMOTE_ADDR'], ['92.63.64.239', '95.170.145.167'])) {
+        if (!in_array($_SERVER['REMOTE_ADDR'], ['92.63.64.239', '95.170.145.167', '192.168.144.4'])) {
+            return response(true, $_SERVER['REMOTE_ADDR'] . ' unauthorized', null, 403);
         }
         $path = request()['path'] ?? null;
 
         if (empty($path)) {
             return response(false, 'path must be requied', null, 422);
         }
+        preg_match('/^\/api\/public\/((lectures|courses)\/[0-9a-z.]*.(png|jpeg|jpg|mp4|webm|pdf|mp3|wav|doc|docx|xlsx|pptx|txt))$/', $path, $matches);
 
-        // if (preg_match(/$path/)) {
-            // return response(false, 'path must be requied', null, 422);
-        // }
+        $path = '../storage/app/' . $matches[1];
 
-        die(file_exists($path));
+        if (file_exists($path)) {
+            unlink($path);
+            return response(true, 'file deleted', null, 200);
+        }
+
+        return response(false, 'file not exists', null, 422);
     }
 }
