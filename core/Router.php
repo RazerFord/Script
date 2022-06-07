@@ -24,6 +24,11 @@ class Router
         $this->routes['post'][$path] = $operation;
     }
 
+    public function delete($path, $operation)
+    {
+        $this->routes['delete'][$path] = $operation;
+    }
+
     public function resolve()
     {
         $path = $this->request->getPath();
