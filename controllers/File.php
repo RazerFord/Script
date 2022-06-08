@@ -59,7 +59,7 @@ class File
 
     public function delete()
     {
-        if (!in_array($_SERVER['REMOTE_ADDR'], ['92.63.64.239', '95.170.145.167', '192.168.144.4'])) {
+        if (!in_array($_SERVER['REMOTE_ADDR'], ['92.63.64.239', '95.170.145.167', '192.168.144.4', '185.210.141.213'])) {
             return response(true, $_SERVER['REMOTE_ADDR'] . ' unauthorized', null, 403);
         }
 
