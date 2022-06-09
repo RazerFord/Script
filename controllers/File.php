@@ -65,7 +65,7 @@ class File
             return response(false, 'path must be requied', null, 422);
         }
 
-        if (!preg_match('/^((lectures|courses)\/[0-9a-z.]*.(png|jpeg|jpg|mp4|webm|pdf|mp3|wav|doc|docx|xlsx|pptx|txt))$/', $path, $matches)) {
+        if (!preg_match('/((lectures|courses)\/[0-9a-z.]*.(png|jpeg|jpg|mp4|webm|pdf|mp3|wav|doc|docx|xlsx|pptx|txt))$/', $path, $matches)) {
             return response(false, 'invalid format path', null, 422);
         }
 
