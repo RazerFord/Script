@@ -59,24 +59,12 @@ class File
 
     public function delete()
     {
-        $client  = @$_SERVER['HTTP_CLIENT_IP'];
-        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
-        $remote  = @$_SERVER['REMOTE_ADDR'];
-
-        if (filter_var($client, FILTER_VALIDATE_IP)) $ip = $client;
-        elseif (filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
-        else $ip = $remote;
-
-        if (!in_array($ip, ['92.63.64.239', '95.170.145.167', '192.168.144.4', '185.210.141.213', ['192.168.192.4']])) {
-            return response(true,  $ip . ' unauthorized', null, 403);
-        }
-
         $path = request()['path'] ?? null;
 
         if (empty($path)) {
             return response(false, 'path must be requied', null, 422);
         }
-        // preg_match('/^\/api\/public\/((lectures|courses)\/[0-9a-z.]*.(png|jpeg|jpg|mp4|webm|pdf|mp3|wav|doc|docx|xlsx|pptx|txt))$/', $path, $matches);
+
         if (!preg_match('/^((lectures|courses)\/[0-9a-z.]*.(png|jpeg|jpg|mp4|webm|pdf|mp3|wav|doc|docx|xlsx|pptx|txt))$/', $path, $matches)) {
             return response(false, 'invalid format path', null, 422);
         }
