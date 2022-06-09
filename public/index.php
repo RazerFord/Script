@@ -6,7 +6,7 @@ use app\core\Application;
 use app\core\ServiceProvider;
 use app\middleware\Authorization;
 use app\middleware\CorseMiddleware;
-phpinfo();
+
 $app = new Application();
 
 ServiceProvider::register('request', $app->router->request);
