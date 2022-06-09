@@ -67,7 +67,7 @@ class File
         elseif (filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
         else $ip = $remote;
 
-        if (!in_array($ip, ['92.63.64.239', '95.170.145.167', '192.168.144.4', '185.210.141.213'])) {
+        if (!in_array($ip, ['92.63.64.239', '95.170.145.167', '192.168.144.4', '185.210.141.213', ['192.168.192.4']])) {
             return response(true,  $ip . ' unauthorized', null, 403);
         }
 
