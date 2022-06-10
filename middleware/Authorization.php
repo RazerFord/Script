@@ -52,7 +52,8 @@ class Authorization
     public function except()
     {
         $exceptPaths = [
-            '/delete-file'
+            '/delete-file',
+            '/delete-files',
         ];
         return in_array($_SERVER['REQUEST_URI'], $exceptPaths);
     }
