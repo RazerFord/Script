@@ -86,10 +86,34 @@ class File
 
     public function deletes()
     {
-        //fiction
-        $path = ["123", "123", "123", "https:\/\/file-upload-academy.s3.eu-central-1.amazonaws.com\/courses\/1653996440_1653996440\u041a\u0443\u0440\u0441\u043f\u043e\u0430\u043b\u0433\u043e\u0440\u0438\u0442\u043c\u0430\u043c.png", "\/api\/public\/courses\/1654569183.85muojidztcklwgx2vbqehparnsyf.xlsx", "\/api\/public\/courses\/1654569183.85muojidztcklwgx2vbqehparnsyf.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/courses\/1654569183.85muojidztcklwgx2vbqehparnsyf.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/courses\/1654659263.6279uhnzgqctwvpodksayebmxfirjl.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/courses\/1654659263.6279uhnzgqctwvpodksayebmxfirjl.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/courses\/1654569183.85muojidztcklwgx2vbqehparnsyf.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/courses\/1654745437.8943dcloxvnzhtfpykbusjwmaeigqr.png", "0.0.0.0:8081\/api\/public\/courses\/s.85muojidztcklwgx2vbqehparnsyf.png", "\/api\/public\/courses\/s.85muojidztcklwgx2vbqehparnsyf.png", "https:\/\/file-upload-academy.s3.eu-central-1.amazonaws.com\/courses\/1653733500_1653733500\u041d\u043e\u0432\u043e\u0435\u0438\u043c\u044f.png", "https:\/\/file-upload-academy.s3.eu-central-1.amazonaws.com\/courses\/1653996672_1653996672\u041d\u043e\u0432\u043e\u0435\u0438\u043c\u044f.png", "123", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "\/api\/public\/lectures\/1654569226.5763kvgmwurnqzspleoyhxbfdcatij.xlsx", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/lectures\/1654659263.6279uhnzgqctwvpodksayebmxfirjl.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/lectures\/1654659263.6279uhnzgqctwvpodksayebmxfirjl.png", "http:\/\/ec2-3-68-233-73.eu-central-1.compute.amazonaws.com:8080\/api\/public\/lectures\/1654659421.2535qbtnedacygkrumhwvxzifsoplj.xlsx"];
-        // var_dump($path);
-        ($this->getDirFiles(__DIR__ . '/../storage/app'));
+        $paths = isset(request()['paths']) ?? [];
+
+        if (empty($paths)) {
+            return response(false, 'paths must be requied', null, 422);
+        }
+
+        foreach ($paths as $path) {
+            $files[] = str_replace("https://avtospas.com/api/public/", "", $path);
+        }
+
+        $saveFiles = $this->getDirFiles(__DIR__ . '/../storage/app');
+
+        foreach ($saveFiles as $key1 => $saveFile) {
+            foreach ($files as $key2 => $file) {
+                if (strpos($saveFile, $file) !== false) {
+                    unset($saveFiles[$key1]);
+                    unset($files[$key2]);
+                }
+            }
+        }
+
+        foreach ($saveFiles as $saveFile) {
+            if (is_file($saveFile)) {
+                unlink($saveFile);
+            }
+        }
+
+        return response(true, 'files deleted', null, 200);
     }
 
     /**
@@ -103,8 +127,8 @@ class File
         $directory = new \RecursiveDirectoryIterator($dir);
         $iterator = new \RecursiveIteratorIterator($directory);
         $files = array();
+
         foreach ($iterator as $info) {
-            var_dump($info->getPathname());
             $files[] = $info->getPathname();
         }
 
