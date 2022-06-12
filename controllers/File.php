@@ -13,7 +13,7 @@ class File
 
     public function SaveCourse()
     {
-        return $this->save('courses/');
+        return $this->saveFileForCourse();
     }
 
     public function DeleteFile()
@@ -135,5 +135,37 @@ class File
         }
 
         return $files;
+    }
+
+    public function saveFileForCourse()
+    {
+        $request = request();
+
+        $file = isset($request['file']) ? $request['file'] : null;
+
+        if (empty($file)) {
+            return response(false, 'attribute file must not be empty', null, 422);
+        }
+
+
+        if (!is_string($file)) {
+            return response(false, 'attribute file must be string', null, 422);
+        }
+
+        $fileDecoder = new DecodeFile();
+
+        if (!$fileDecoder->setBase64($file)) {
+            return response(false, 'invalid base64', null, 422);
+        }
+
+        if ($fileDecoder->getSize() / 1024 / 1024.0 > 30) {
+            return response(false, 'max size file 1 GB', null, 422);
+        }
+
+        $name = microtime(true) . str_shuffle('abcdefghijklmnopqrstuvwxyz');
+
+        $path = $fileDecoder->save('courses/', $name);
+
+        return response(true, 'file saved', ['path' => $path], 200);
     }
 }
