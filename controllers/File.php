@@ -41,23 +41,21 @@ class File
             return response(false, 'attribute file must not be empty', null, 422);
         }
 
-        if (!is_string($file)) {
-            return response(false, 'attribute file must be string', null, 422);
-        }
-
-        $fileDecoder = new DecodeFile();
-
-        if (!$fileDecoder->setBase64($file)) {
-            return response(false, 'invalid base64', null, 422);
-        }
-
-        if ($fileDecoder->getSize() / 1024 / 1024 / 1024.0 > 1) {
+        if ($file['size'] / 1024 / 1024 / 1024.0 > 1) {
             return response(false, 'max size file 1 GB', null, 422);
+        }
+
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+        if (!preg_match('/(png|jpeg|jpg|mp4|webm|pdf|mp3|wav|doc|docx|xlsx|pptx|txt)/', $extension)) {
+            return response(false, 'invalid extension', null, 422);
         }
 
         $name = microtime(true) . str_shuffle('abcdefghijklmnopqrstuvwxyz');
 
-        $path = $fileDecoder->save($dir, $name);
+        $tmpName = $file["tmp_name"];
+        move_uploaded_file($tmpName, __DIR__ . "/../storage/app/$dir/$name.$extension");
+        $path = '/api/public/' . $dir  . $name . '.' . $extension;
 
         return response(true, 'file saved', ['path' => $path], 200);
     }
@@ -86,10 +84,10 @@ class File
 
     public function deletes()
     {
-        $paths = isset(request()['paths']) ?? [];
+        $paths = isset(request()['paths']) ? request()['paths'] : [];
 
-        if (empty($paths)) {
-            return response(false, 'paths must be requied', null, 422);
+        if (empty($paths) || !is_array($paths)) {
+            return response(false, 'paths must be requied and array', null, 422);
         }
 
         foreach ($paths as $path) {
@@ -97,6 +95,10 @@ class File
         }
 
         $saveFiles = $this->getDirFiles(__DIR__ . '/../storage/app');
+
+        if (empty($saveFiles)) {
+            return response(false, 'path don\'t exist files', null, 422);
+        }
 
         foreach ($saveFiles as $key1 => $saveFile) {
             foreach ($files as $key2 => $file) {

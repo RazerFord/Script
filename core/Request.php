@@ -51,6 +51,10 @@ class Request
             $this->body = array_merge($this->body, $_POST);
         }
 
+        if (is_array($_FILES)) {
+            $this->body = array_merge($this->body, $_FILES);
+        }
+
         $input = json_decode(file_get_contents("php://input"), true);
 
         if (is_array($input)) {
