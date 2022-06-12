@@ -37,6 +37,10 @@ class File
 
         $file = isset($request['file']) ? $request['file'] : null;
 
+        if (is_string($file)) {
+            return response(false, 'attribute file must not be string', null, 422);
+        }
+
         if (empty($file)) {
             return response(false, 'attribute file must not be empty', null, 422);
         }
